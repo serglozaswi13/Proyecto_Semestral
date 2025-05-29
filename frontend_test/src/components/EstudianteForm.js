@@ -18,12 +18,12 @@ function EstudianteForm({ selected, onSuccess }) {
     } else {
       setForm({
         num_cuenta: '',
-        Primer_apellido: '',
-        Segundo_apellido: '',
-        Nombres: '',
-        Carrera: '',
-        Grupo: '',
-        Telefono: ''
+        primer_apellido: '',
+        segundo_apellido: '',
+        nombres: '',
+        carrera: '',
+        grupo: '',
+        telefono: ''
       });
     }
   }, [selected]);
@@ -36,20 +36,20 @@ function EstudianteForm({ selected, onSuccess }) {
     e.preventDefault();
 
     const request = selected
-      ? axios.put(`http://localhost:3001/api/estudiantes/${selected.num_cuenta}`, form)
-      : axios.post('http://localhost:3001/api/estudiantes', form);
+      ? axios.put(`http://localhost:4000/api/estudiantes/${selected.num_cuenta}`, form)
+      : axios.post('http://localhost:4000/api/estudiantes', form);
 
     request
       .then(() => {
         onSuccess();
         setForm({
           num_cuenta: '',
-          Primer_apellido: '',
-          Segundo_apellido: '',
-          Nombres: '',
-          Carrera: '',
-          Grupo: '',
-          Telefono: ''
+          primer_apellido: '',
+          segundo_apellido: '',
+          nombres: '',
+          carrera: '',
+          grupo: '',
+          telefono: ''
         });
       })
       .catch(() => alert('Error al guardar estudiante'));

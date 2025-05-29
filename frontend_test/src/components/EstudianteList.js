@@ -2,24 +2,30 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function EstudianteList({ onEdit, reload }) {
-  
   const [estudiantes, setEstudiantes] = useState([]);
 
   const fetchEstudiantes = () => {
-    axios.get('http://localhost:3001/api/estudiantes')
-      .then(res => setEstudiantes(res.data))
-      .catch(() => alert("Error al cargar estudiantes"));
-  };
+  axios.get('http://localhost:4000/api/estudiantes')
+    .then(res => {
+      console.log("Estudiantes cargados:", res.data); // Para verificar que sí llegan
+      setEstudiantes(res.data);
+    })
+    .catch((err) => {
+      console.error("Error real al cargar estudiantes:", err); // Mostrar el error real en consola
+      alert("Error al cargar estudiantes");
+    });
+};
+
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:3001/api/estudiantes/${id}`)
+    axios.delete(`http://localhost:4000/api/estudiantes/${id}`)
       .then(fetchEstudiantes)
       .catch(() => alert("Error al eliminar"));
   };
 
   useEffect(() => {
     fetchEstudiantes();
-  }, [reload]); // Se actualiza al cambiar `reload`
+  }, [reload]);
 
   return (
     <div>
