@@ -2,8 +2,13 @@ const pool = require('../db');
 
 // GET /api/estudiantes
 exports.getAll = async (req, res) => {
-  const result = await pool.query('SELECT * FROM Estudiante');
-  res.json(result.rows);
+  try {
+    const result = await pool.query('SELECT * FROM "estudiante"');
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error al obtener estudiantes:', error.message);
+    res.status(500).json({ error: 'Error al obtener estudiantes', details: error.message });
+  }
 };
 
 // GET /api/estudiantes/:id
@@ -14,13 +19,19 @@ exports.getById = async (req, res) => {
 
 // POST /api/estudiantes
 exports.create = async (req, res) => {
-  const { num_cuenta, Primer_apellido, Segundo_apellido, Nombres, Carrera, Grupo, Telefono } = req.body;
-  const result = await pool.query(
-    'INSERT INTO Estudiante VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *',
-    [num_cuenta, Primer_apellido, Segundo_apellido, Nombres, Carrera, Grupo, Telefono]
-  );
-  res.json(result.rows[0]);
+  try {
+    const { num_cuenta, Primer_apellido, Segundo_apellido, Nombres, Carrera, Grupo, Telefono } = req.body;
+    const result = await pool.query(
+      'INSERT INTO Estudiante VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *',
+      [num_cuenta, Primer_apellido, Segundo_apellido, Nombres, Carrera, Grupo, Telefono]
+    );
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error("Error al guardar estudiante:", error.message);
+    res.status(500).json({ error: "Error al guardar estudiante", details: error.message });
+  }
 };
+
 
 // PUT /api/estudiantes/:id
 exports.update = async (req, res) => {
