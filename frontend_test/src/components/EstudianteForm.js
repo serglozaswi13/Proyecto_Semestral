@@ -4,12 +4,12 @@ import axios from 'axios';
 function EstudianteForm({ selected, onSuccess }) {
   const [form, setForm] = useState({
     num_cuenta: '',
-    Primer_apellido: '',
-    Segundo_apellido: '',
-    Nombres: '',
-    Carrera: '',
-    Grupo: '',
-    Telefono: ''
+    primer_apellido: '',
+    segundo_apellido: '',
+    nombres: '',
+    carrera: '',
+    grupo: '',
+    telefono: ''
   });
 
   useEffect(() => {
